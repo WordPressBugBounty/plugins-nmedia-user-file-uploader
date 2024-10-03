@@ -1,0 +1,7 @@
+== How to secure files ==
+We have added sample file inside security/htaccess. Follow these steps to protect your files
+
+
+1. Copy htaccess file
+2. Paste this htaccess file into wp-content/uploads/user_uploads/ directory
+3. Rename htaccess to .htaccess after paste

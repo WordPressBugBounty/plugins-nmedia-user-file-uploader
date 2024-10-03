@@ -1,0 +1,578 @@
+#ffmwp-wrapper {
+  min-width: 90%;
+  margin: 0 auto;
+  font-family: sans-serif;
+  color: #333;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px
+}
+
+#ffmwp-left-col {
+  flex: 0 0 20%;
+  padding:5px;
+  background-color: #000;
+  color:#fff;
+}
+
+#ffmwp-right-col {
+  flex: 1;
+}
+
+.ffmwp-center{
+  text-align:center;
+}
+
+.ffmwp-navbar-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eee;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.ffmwp-total-files {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.ffmwp-cancel-btn.ffmwp-delete-selected{
+  display: none;
+}
+
+.ffmwp-search {
+  padding: 10px 0;
+  text-align: center;
+}
+
+.ffmwp-search-input {
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  height: 1.6rem;
+}
+
+.ffmwp-search-btn {
+  padding: 5px;
+  border-radius: 3px;
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+}
+
+.ffmwp-search-btn:hover {
+  background-color: #ddd;
+}
+
+.ffmwp-navbar-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eee;
+  padding: 10px;
+}
+
+.ffmwp-breadcrumb {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.ffmwp-breadcrumb a {
+  color: #333;
+  text-decoration: none;
+}
+
+.ffmwp-breadcrumb a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.ffmwp-filter {
+  display: flex;
+  align-items: center;
+}
+
+.ffmwp-filter > * {
+  flex: 0 0 auto;
+  margin-right: 10px;
+}
+
+.ffmwp-sort {
+  width: auto;
+}
+
+.ffmwp-files {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  gap:20px;
+  justify-content: stretch;
+  margin: 15px 0;
+}
+
+.ffmwp-files-list{
+  flex-direction:column;
+}
+.ffmwp-files-list > .ffmwp-file{
+  justify-content: space-between !important;
+  flex-direction: row !important;
+  padding:4px;
+}
+
+.ffmwp-files-list .ffmwp-file-actions{
+  margin-left: auto;
+}
+
+.ffmwp-dir-empty {
+  margin:25px 0;
+  text-align: center;
+  width:100%;
+}
+
+
+.ffmwp-file {
+  min-width: 160px; /* Add min-width to limit the file item width */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.ffmwp-file.node-selected{
+  border-color:blue;
+}
+
+.ffmwp-file-thumbnail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+}
+
+.ffmwp-delete-file{
+  cursor: pointer;
+}
+
+.ffmwp-file-thumbnail img {
+    object-fit: contain;
+}
+.ffmwp-file-info {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Replace with the desired maximum width */
+    padding:10px;
+}
+.ffmwp-file-name {
+  font-weight: bold;
+}
+
+.ffmwp-file-size {
+  font-size: 14px;
+  color: #666;
+}
+
+.ffmwp-file-actions {
+  display: flex;
+  justify-content: space-between; /* Change the value to space-between */
+  align-items: center;
+  /*background-color: #f2f2f2;*/
+}
+
+.ffmwp-file-actions a {
+  color: #fdfafa;
+  text-decoration: none;
+  font-size: 14px;
+  flex-basis: calc(50% - 10px);
+  text-align: center;
+  padding: 5px;
+  background-color: #000;
+  margin: 1px;
+}
+
+.ffmwp-file-actions a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.ffmwp-header {
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  background-color: #eee;
+  padding: 10px;
+  margin: 10px 0;
+}
+.ffmwp-subheader {
+  font-weight: bold;
+  font-size: 20px;
+  background-color: #eee;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+/* ========= drag/drop ======== */
+/*css for compatibality issuse*/
+.wpfm-active-droppable-box.ffmwp-file {
+    background: #5eb75ebf;
+}
+.wpfm-file-droppable-box.ffmwp-file {
+    background: #da3434;
+}
+
+
+/* ========= forms inputs ========= */
+.ffmwp-form-group {
+  margin-bottom: 10px;
+}
+
+.ffmwp-label {
+  display: block;
+  font-weight: bold;
+  /*margin-bottom: 5px;*/
+}
+
+.ffmwp-radio-label {
+  margin-left: 5px;
+}
+
+.ffmwp-text,
+.ffmwp-textarea {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ffmwp-meta-text-field
+.ffmwp-text {
+  height: 30px;
+}
+
+.ffmwp-textarea {
+  height: 150px;
+}
+
+.ffmwp-select {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ffmwp-select option {
+  font-size: 14px;
+}
+
+
+.ffmwp-button {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin:5px 0;
+}
+
+.ffmwp-button:hover {
+  background-color: #333;
+}
+
+.ffmwp-cancel-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: none;
+  background-color: #f44336;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ffmwp-cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+.ffmwp-upload-button {
+  display: inline-block;
+  padding: 5px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ffmwp-upload-button input[type="file"] {
+  position: absolute;
+  left: -99999px;
+}
+
+.ffmwp-upload-button:hover {
+  background-color: #333;
+}
+
+/** ======== form input inline ========= */
+.ffmwp-form-group-inline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ffmwp-form-group-inline label {
+  flex-basis: 30%;
+  margin-right: 10px;
+}
+
+label.ffmwp-checkbox-inline{
+  flex-basis:auto;
+}
+
+.ffmwp-form-group-inline textarea,
+.ffmwp-form-group-inline input[type="text"],
+.ffmwp-form-group-inline input[type="number"],
+.ffmwp-form-group-inline input[type="date"],
+.ffmwp-form-group-inline input[type="color"],
+.ffmwp-form-group-inline input[type="email"],
+.ffmwp-form-group-inline input[type="password"],
+.ffmwp-form-group-inline select {
+  flex-basis: 70%;
+}
+
+/** ====== upload area ======= */
+.ffmwp-upload-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+  padding: 10px 0;
+  gap: 10px;
+}
+
+.ffmwp-upload-button{
+  display: inline-block;
+  padding: 5px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ffmwp-cancel-btn{
+  background-color: #d32f2f;
+}
+
+.ffmwp-upload-button:hover,
+.ffmwp-click-to-reveal:hover,
+.ffmwp-cancel-btn:hover {
+  background-color: #000;
+}
+
+.ffmwp-click-to-reveal-block{
+  display:none;
+}
+
+/*.ffmwp-upload-button,*/
+/*.ffmwp-click-to-reveal {*/
+/*  background-color: #007bff;*/
+/*}*/
+/*.ffmwp-uploadarea-form-content{*/
+/*  margin:10px 0;*/
+/*}*/
+/*.ffmwp-upload-buttons {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  background-color: #eee;*/
+/*  padding: 10px 0;*/
+/*  gap: 10px;*/
+/*}*/
+
+.ffmwp-search-input {
+  margin-left: auto;
+}
+
+.file-preview-wrapper{
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.file-preview-wrapper-img{
+  flex-basis: 30%;
+}
+.file-preview-wrapper-inputs{
+  flex-grow: 1;
+}
+
+.ffmwp-init-display{
+  display:none;
+}
+.ffmwp-save-file-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ffmwp-save-file-btn button {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+/* ======== breadcrumb ======= */
+.ffmwp-breadcrumbs {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.ffmwp-bc-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ffmwp-bc-list .ffmwp-bc-item:last-child {
+  font-weight: bold;
+}
+/** ====== left col menu ======= */
+.ffmwp-left-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ffmwp-left-menu li {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.ffmwp-left-menu li a {
+  display: block;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.ffmwp-left-menu li a:hover {
+  background-color: #333;
+}
+
+.ffmwp-submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background-color: #000;
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  width: max-content; /* set the submenu width to match its content */
+  min-width: 75px; /* set a minimum width of 75px */
+}
+
+.ffmwp-left-menu li:hover > .ffmwp-submenu {
+  display: block;
+}
+
+/* remove the list style from the submenu */
+.ffmwp-submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ffmwp-submenu li a:hover {
+  background-color: #333;
+}
+/* ======== iframe - document viewere ======== */
+#ffmwp-iframe-wrapper {
+  width: 100%;
+  height: 90%;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#ffmwp-iframe-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/** ========= Meta Info Table ============== */
+.ffmwp-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ffmwp-table th,
+.ffmwp-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.ffmwp-table th {
+  background-color: #eee;
+  font-weight: bold;
+}
+
+.ffmwp-table td.label {
+  font-weight: bold;
+}
+
+.ffmwp-revise-notice {
+  background-color: #a5dc86;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+
+

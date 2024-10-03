@@ -1,0 +1,175 @@
+.meta-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000;
+  padding: 3px;
+  cursor: move;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 1px 0 #ccc;
+  color:#fff;
+}
+
+.meta-header .title{
+  color:#fff;
+}
+
+.ffmwp-header-tools{
+  font-size: 1.2rem;
+  cursor:pointer;
+}
+
+/* forms inputs */
+.ffmwp-form-group {
+  margin-bottom: 10px;
+}
+
+.ffmwp-label {
+  display: block;
+  font-weight: bold;
+  /*margin-bottom: 5px;*/
+}
+
+.ffmwp-radio-label {
+  margin-left: 5px;
+}
+
+.ffmwp-text,
+.ffmwp-textarea {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ffmwp-meta-text-field
+.ffmwp-text {
+  height: 30px;
+}
+
+.ffmwp-textarea {
+  height: 150px;
+}
+
+.ffmwp-select {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ffmwp-select option {
+  font-size: 14px;
+}
+
+
+.ffmwp-button {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin:5px 0;
+}
+
+.ffmwp-button:hover {
+  background-color: #333;
+}
+
+.ffmwp-cancel-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: none;
+  background-color: #f44336;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ffmwp-cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+.ffmwp-upload-button {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 5px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ffmwp-upload-button input[type="file"] {
+  position: absolute;
+  left: -99999px;
+}
+
+.ffmwp-upload-button:hover {
+  background-color: #333;
+}
+
+/** ======== form input inline ========= */
+.ffmwp-form-group-inline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ffmwp-form-group-inline label {
+  flex-basis: 30%;
+  margin-right: 10px;
+}
+
+.ffmwp-form-group-inline textarea,
+.ffmwp-form-group-inline input[type="text"],
+.ffmwp-form-group-inline input[type="number"],
+.ffmwp-form-group-inline input[type="date"],
+.ffmwp-form-group-inline input[type="color"],
+.ffmwp-form-group-inline input[type="email"],
+.ffmwp-form-group-inline input[type="password"],
+.ffmwp-form-group-inline select {
+  flex-basis: 70%;
+}
+
+.ffmwp-fields-wrapper{
+  padding:10px;
+}
+
+.ffmwp-options-values{
+  display: flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.ffmwp-btn-option{
+  margin-bottom: 5px;
+}
+
+.ffmwp-select-options{
+  flex-grow: 1
+}

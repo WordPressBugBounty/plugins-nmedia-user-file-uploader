@@ -1,0 +1,122 @@
+/* The modal */
+.ffmwp-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 9999; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal content */
+.ffmwp-modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70vw;
+  height: 70%;
+  /*max-height: 50vh;*/
+  /*max-width: 600px;*/
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y: auto; /* Enable vertical scrolling within the modal content */
+}
+
+/* Modal header */
+.ffmwp-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+/* Modal title */
+.ffmwp-modal-title {
+  margin: 0;
+}
+
+/* Modal body */
+.ffmwp-modal-body {
+  display: flex;
+}
+
+/* Modal columns */
+.ffmwp-modal-col {
+  padding: 0 10px;
+}
+
+.ffmwp-modal-col-left {
+  width: 30%;
+  padding: 0 10px;
+}
+
+.ffmwp-modal-col-right {
+  width: calc(70% - 20px);
+  padding: 0 10px;
+}
+
+.ffmwp-modal-col-right > div {
+  height: 100%;
+  overflow-y: auto;
+}
+
+
+/* Modal column items */
+.ffmwp-modal-col-item {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items:center;
+}
+
+/* File thumbnail */
+.ffmwp-modal-file-thumb {
+  width: 100px;
+  height: 100px;
+  object-fit:contain;
+}
+
+/* Modal column labels */
+.ffmwp-modal-col-label {
+  font-weight: bold;
+  width: 100px;
+}
+
+/* Modal column values */
+.ffmwp-modal-col-value {
+  flex: 1;
+}
+
+/* File title */
+.ffmwp-modal-file-title {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+/* File description */
+.ffmwp-modal-file-desc {
+  margin-top: 0;
+}
+
+/* Close button */
+.ffmwp-modal-close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.ffmwp-modal-close:hover,
+.ffmwp-modal-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
