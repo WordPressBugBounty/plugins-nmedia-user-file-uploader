@@ -4,7 +4,7 @@ Donate link: http://www.najeebmedia.com/donate/
 Tags: Front end upload, File uploader, User files, User files manager, File uploaders, Image upload, user private files
 Requires at least: 3.5
 Tested up to: 6.5.5
-Stable tag: 23.0
+Stable tag: 23.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,8 @@ it is because of your server side settings, sometime php.ini does not allow to u
 6. File Listing with Details
 
 == Changelog ==
+= 23.1 November 14, 2024 =
+* Bug fixed: Some PHP related warnings removed from the code.
 = 23.0 July 7, 2024 =
 * Bug fixed: [Mobile responsive issue fixed](https://wordpress.org/support/topic/responsive-mode-20/)
 = 22.9 January 14, 2024 =

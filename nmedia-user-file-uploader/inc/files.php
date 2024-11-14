@@ -471,7 +471,7 @@ function wpfm_save_file_data() {
 		$file_data['file_group']	= isset($file_data['file_group']) ? array_map('sanitize_text_field', $file_data['file_group']) : '';
 		$file_data['filename']		= sanitize_text_field($file_data['filename']);
 		$file_data['title'] 		= sanitize_title($file_data['title']);
-		$file_data['parent_id'] 	= intval($file_data['parent_id']);
+		$file_data['parent_id'] 	= isset($file_data['parent_id']) ? intval($file_data['parent_id']) : null;
 		$file_data['file_details']	= wp_kses($file_data['file_details'], $arr);
 		$file_data['video_duration']	= isset($file_data['video_duration']) ? floatval($file_data['video_duration']) : '';
 		return $file_data;
@@ -481,12 +481,16 @@ function wpfm_save_file_data() {
 	foreach($uploaded_files as $key => $file){
 
 		$file_group = isset($file['file_group']) ? $file['file_group'] : '';
-		$all_files_with_data[$key] = array('filename'	=> $file['filename'],
-											'title'		=> $file['title'],
-											'description'	=> $file['file_details'],
+		$parent_id = isset($file_data['parent_id']) ? intval($file_data['parent_id']) : null;
+		$file_details = isset($file_data['file_details']) ? intval($file_data['file_details']) : '';
+		$video_duration = isset($file_data['video_duration']) ? intval($file_data['video_duration']) : '';
+		
+		$all_files_with_data[$key] = array('filename'		=> $file['filename'],
+											'title'			=> $file['title'],
+											'description'	=> $file_details,
 											'file_group'	=> $file_group,
-											'parent_id'	=> $file['parent_id'],
-											'video_duration' => $file['video_duration']
+											'parent_id'		=> $parent_id,
+											'video_duration' => $video_duration
 											);
 											
 		//if amazon data found
@@ -778,42 +782,41 @@ function wpfm_get_user_files_size($user_id){
  */
 function wpfm_delete_file() {
 	
-	/*if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
+	if (empty($_POST) || !wp_verify_nonce($_POST['wpfm_ajax_nonce'], 'wpfm_securing_ajax')) {
 		wp_send_json_error(__("File cannot be deleted, please contact admin", "wpfm"));
-	}*/
+	}
 	
 	$allow_guest = wpfm_get_option('_allow_guest_upload') == 'yes' ? true : false;
 	if( !$allow_guest && ! wpfm_is_current_user_post_author($_POST['file_id'] )) {
 		wp_send_json_error(__("Sorry, not allowed", "wpfm"));
 	}
 	
-	$file_ids = isset($_POST['file_ids']) ? array_map('intval', ($_POST['file_ids'])) : [];
-	
+	$file_ids = isset($_POST['file_ids']) && is_array($_POST['file_ids']) ? array_map('intval', $_POST['file_ids']) : [];
 	$is_multiple = isset($_POST['is_multiple']) ? true : false;
 	$message = __('Selected files removed successfully', 'wpfm');
 	
-	
-	if( !$is_multiple ) {
+	$current_user_filesize = 0; // Initialize to 0 if not set
+	if (!$is_multiple && isset($_POST['file_id'])) {
 		$file_id = intval($_POST['file_id']);
 		$file = new WPFM_File($file_id);
-		$current_user_filesize = get_user_meta( $file->owner_id, 'wpfm_total_filesize_used', true );
+		$current_user_filesize = get_user_meta($file->owner_id, 'wpfm_total_filesize_used', true);
 		$message = sprintf(__('%s is removed successfully', 'wpfm'), $file->title);
 		
-		if( $file->node_type === 'dir' ){
+		if ($file->node_type === 'dir') {
 			$message = sprintf(__('%d files, directories are removed inside %s', 'wpfm'), count($file_ids), $file->title);
 		}
 	}
 	
 	$removed_filesize = 0;
-	foreach($file_ids as $file_id){
+	foreach ($file_ids as $file_id) {
 		$file = new WPFM_File($file_id);
-		if( $file->node_type !== 'dir' ) {
-			if($file->location === 'local'){
+		if ($file->node_type !== 'dir') {
+			if ($file->location === 'local') {
 				$removed_filesize += $file->delete_file_locally();
-			}else if($file->location === 'amazon'){
+			} else if ($file->location === 'amazon') {
 				$resp = $file->delete_file_from_aws();
-				if( is_wp_error($resp) ){
-					$message .= '\n'.$resp->get_error_message();
+				if (is_wp_error($resp)) {
+					$message .= "\n" . $resp->get_error_message();
 				}
 			}
 		}
@@ -823,17 +826,19 @@ function wpfm_delete_file() {
 	}
 	
 	// updating user filesize
-	
+	$current_user = wp_get_current_user();
 	$updated_filesize = intval($current_user_filesize) - $removed_filesize;
-	update_user_meta( $curent_user->ID, 'wpfm_total_filesize_used', $updated_filesize );
+	update_user_meta($current_user->ID, 'wpfm_total_filesize_used', $updated_filesize);
 		
-    $response = ['message' => $message, 
-    			'filesize_removed' => $removed_filesize,
-    			'total_filesize' => $updated_filesize];
+    $response = [
+		'message' => $message, 
+    	'filesize_removed' => $removed_filesize,
+    	'total_filesize' => $updated_filesize
+    ];
     
 	wp_send_json_success($response);
-	
 }
+
 
 
 function wpfm_extrac_group_from_shortcode( $atts ){
