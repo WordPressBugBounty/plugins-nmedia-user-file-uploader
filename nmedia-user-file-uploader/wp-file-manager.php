@@ -3,7 +3,7 @@
  * Plugin Name: WP File Manager
  * Plugin URI: https://najeebmedia.com/
  * Description: WordPress File Manager Plugin allow members and guest users to upload and manage their files on front-end.
- * Version: 23.1
+ * Version: 23.2
  * Author: N-Media
  * Author URI: najeebmedia.com
  * Text Domain: wpfm
@@ -18,7 +18,7 @@ define( 'WPFM_PATH', untrailingslashit(plugin_dir_path( __FILE__ )) );
 define( 'WPFM_URL', untrailingslashit(plugin_dir_url( __FILE__ )) );
 define( 'WPFM_SHORT_NAME', 'wpfm' );
 define( 'WPFM_USER_UPLOADS', 'user_uploads' );
-define( 'WPFM_VERSION', '23.1' );
+define( 'WPFM_VERSION', '23.2' );
 
 
 /* ======= plugin includes =========== */

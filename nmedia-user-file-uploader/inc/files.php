@@ -474,6 +474,8 @@ function wpfm_save_file_data() {
 		$file_data['parent_id'] 	= isset($file_data['parent_id']) ? intval($file_data['parent_id']) : null;
 		$file_data['file_details']	= wp_kses($file_data['file_details'], $arr);
 		$file_data['video_duration']	= isset($file_data['video_duration']) ? floatval($file_data['video_duration']) : '';
+		$file_data['file_meta']	= isset($file_data['file_meta']) ? $file_data['file_meta'] : null;
+		
 		return $file_data;
 	}, $_REQUEST['uploaded_files'] );
 
@@ -482,12 +484,11 @@ function wpfm_save_file_data() {
 
 		$file_group = isset($file['file_group']) ? $file['file_group'] : '';
 		$parent_id = isset($file_data['parent_id']) ? intval($file_data['parent_id']) : null;
-		$file_details = isset($file_data['file_details']) ? intval($file_data['file_details']) : '';
 		$video_duration = isset($file_data['video_duration']) ? intval($file_data['video_duration']) : '';
 		
 		$all_files_with_data[$key] = array('filename'		=> $file['filename'],
 											'title'			=> $file['title'],
-											'description'	=> $file_details,
+											'description'	=> $file['file_details'],
 											'file_group'	=> $file_group,
 											'parent_id'		=> $parent_id,
 											'video_duration' => $video_duration

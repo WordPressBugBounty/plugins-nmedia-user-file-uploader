@@ -783,7 +783,7 @@ class WPFM_File {
                 // var_dump('childid', ;$child->id);
             }
             
-            if($child_id) wp_delete_post($child_id, true);
+            // if($child_id) wp_delete_post($child_id, true);
             
             $response = true;
         

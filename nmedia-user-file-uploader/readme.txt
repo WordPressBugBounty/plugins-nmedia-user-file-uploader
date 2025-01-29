@@ -3,71 +3,67 @@ Contributors: nmedia
 Donate link: http://www.najeebmedia.com/donate/
 Tags: Front end upload, File uploader, User files, User files manager, File uploaders, Image upload, user private files
 Requires at least: 3.5
-Tested up to: 6.5.5
-Stable tag: 23.1
+Tested up to: 6.7.1
+Stable tag: 23.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-N-Media Frontend File Manager plugin allow site users to upload files and share with admin.
+N-Media Frontend File Manager plugin enables WordPress site users to upload, manage, and share files directly from the frontend with secure storage and easy-to-use features.
 
 == Description ==
-This plugin lets the wordpress site users to upload files for admin. Each file is saved in private directory so each user can download/delete their own files after login. For more control please see PRO feature below. Use folowing shortcode:: <strong>[ffmwp]</strong>
+N-Media Frontend File Manager empowers WordPress users to securely upload files that are accessible only to admins. Each user’s files are stored in a private directory, ensuring only they can download or delete their own files after logging in. To unlock even more advanced control, explore the PRO features below. Use the following shortcode to integrate the plugin on your site: **[ffmwp]**
 
-<h4>NOTE: Since version 20.0 Old shortcode [nm-wp-file-uploader] will be deprecated soon</h4>
-<h3>Legacy: If you face any issue in new shortcode you can rever back using legacy shortcode: [nm-wp-file-uploader-legacy]</h3>
+**Live Demo Instructions**
+- [Click here](https://najeebmedia.com/filemanager-demo) to launch the demo.
+- Once live, go to **Settings > NM Demo**.
+- Click **Initialize Demo: File Manager** to set up demo pages.
+- Start exploring the plugin’s features!
 
-== Quick Video ==
+== Quick Video Overview ==
 [vimeo https://vimeo.com/285132267]
 
 == Features ==
-* Secure Uploader Script
-* Fast, Responsive and Beautiful UI
-* Searching, Sorting Filters
-* File Detail Popup
-* File Types & Size Settings
-* Labels for Upload & Save Button
-* Progressbar Uploader
-* Thumbs for Images
-* File Details in Admin
-
-<h3>Launch Full Demo</h3>
-<a href="https://najeebmedia.com/filemanager-demo">See Demo</a>
+* **Secure File Uploading**: Protect files with secure upload and storage.
+* **User-Friendly UI**: Fast, responsive, and visually appealing interface.
+* **Smart Search & Sorting Filters**: Easily locate files with search and filter options.
+* **Detailed File Popups**: View file information at a glance.
+* **Customizable File Type & Size Limits**: Set specific upload restrictions.
+* **Custom Labels for Buttons**: Personalize the upload and save buttons.
+* **Real-Time Upload Progress Bar**: Track upload progress visually.
+* **Image Thumbnails**: See previews for image files.
+* **Detailed Admin View**: Manage and view file details in the admin dashboard.
 
 == Pro Features ==
-* Create Directories
-* Set Maximum File Upload
-* Set Limit per User File Count
-* Set Filesize quota for Roles
-* Email Notifications Settings
-* File Rename by Timestamp Prefix
-* Allow Geusts to Upload
-* Allow Users to Share File via Email
-* File Groups
-* Create Unlimited Download Areas
-* File Meta - Create Fields and attache with files
-* Visual Composer Addon Avaiable
+* **Directory Creation**: Users can create custom directories.
+* **Maximum File Upload Control**: Set individual file upload limits.
+* **File Count Per User**: Limit the number of files each user can upload.
+* **Role-Based File Size Quota**: Define upload quotas based on user roles.
+* **Email Notifications**: Configure alerts for file uploads.
+* **Automated Filename Prefixes**: Use timestamp prefixes for file organization.
+* **Guest Uploads**: Allow guest users to upload files.
+* **File Sharing**: Enable users to share files via email.
+* **File Grouping**: Organize files into groups for easy access.
+* **Unlimited Download Areas**: Create multiple download sections.
+* **Custom File Metadata**: Attach custom fields to files, adding valuable context.
+* **Visual Composer Compatibility**: Easily integrate with Visual Composer.
 
 == Download Areas ==
-Downloads Manager allow you to create unlimited download pages. Now file sources can be selected from User Roles, Users and Groups. And File
-access can be granted to User Roles and indivisual users.
+The Download Manager feature lets you create unlimited download pages and specify file sources based on user roles, specific users, or groups. Grant access selectively to individual users or entire roles.
 [vimeo https://vimeo.com/287895466]
 
-== File Meta ==
-File Meta are fields below, which admin can drag/drop. This will be attached to all files and user can add meta against each file.
-<ul>
-	<li><strong>Text</strong></li>
-	<li><strong>Textarea</strong>]</li>
-	<li><strong>Select</strong></li>
-	<li><strong>Checkbox</strong></li>
-	<li><strong>Mask (customized format)</strong></li>
-	<li><strong>Email</strong></li>
-	<li><strong>Date (datepicker)</strong></li>
-	<li><strong>Image</strong></li>
-	<li><strong>Checkbox</strong></li>
-	
-</ul>
+== Custom File Metadata ==
+Admin can create custom metadata fields for files, adding extra detail to each upload. Metadata fields are easy to set up using drag-and-drop functionality and can include:
+- **Text**
+- **Textarea**
+- **Select**
+- **Checkbox**
+- **Masked Format (customized)**
+- **Email**
+- **Date Picker**
+- **Image Upload**
+- **Checkbox**
 
-<a href="https://najeebmedia.com/wordpress-plugin/wp-front-end-file-upload-and-download-manager/">Pro Version</a>
+**[Get the Pro Version](https://najeebmedia.com/wordpress-plugin/wp-front-end-file-upload-and-download-manager/)** to unlock advanced features for a comprehensive file management experience.
 
 
 == Installation ==
@@ -95,12 +91,6 @@ All files are saved under each user directory
 
 Yes
 
-= Why I see HTTP Error message =
-it is because of your server side settings, sometime php.ini does not allow to upload big files. You need to check following two settings in php.ini:<br>
-1- post_max_size<br>
-2- upload_max_filesize
-<a href="http://www.najeebmedia.com/how-increase-file-upload-size-limit-in-wordpress/">check this tutorial</a>
-
 == Screenshots ==
 
 1. Frontend View File Uploading
@@ -111,6 +101,8 @@ it is because of your server side settings, sometime php.ini does not allow to u
 6. File Listing with Details
 
 == Changelog ==
+= 23.2 January 29, 2025 =
+* Bug fixed: [A bug fixed regarding save meta data](https://wordpress.org/support/topic/file-details-not-saving/)
 = 23.1 November 14, 2024 =
 * Bug fixed: Some PHP related warnings removed from the code.
 = 23.0 July 7, 2024 =
@@ -377,7 +369,7 @@ BUG Fixed: Filename will will displayed after uploading for all files.
 * showing images thumbs
 
 = 2.1 =
-* Some latin characters like �, �, � etc were not rendered in file upload button, it is fixed now.
+* Some latin characters like  ,  ,   etc were not rendered in file upload button, it is fixed now.
 
 = 2.0 = 
 * doupload.php and uploadify.php files have removed for best security practice
@@ -448,7 +440,7 @@ front end design is replced with ul/li based structure
 pagination control
 
 = 2.1 =
-Some latin characters like �, �, � etc were not rendered in file upload button, it is fixed now.
+Some latin characters like  ,  ,   etc were not rendered in file upload button, it is fixed now.
 
 = 3.0 =
 this version has major updates. It's not using userfiles table. But we included a migration script which will copy old files into new custom post types. Although some data may be lost.
