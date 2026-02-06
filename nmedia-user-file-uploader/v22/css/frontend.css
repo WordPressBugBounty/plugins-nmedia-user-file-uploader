@@ -10,9 +10,11 @@
 
 #ffmwp-left-col {
   flex: 0 0 20%;
-  padding:5px;
-  background-color: #000;
-  color:#fff;
+  padding: 0;
+  background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 #ffmwp-right-col {
@@ -42,14 +44,30 @@
 }
 
 .ffmwp-search {
-  padding: 10px 0;
-  text-align: center;
+  padding: 20px;
+  background: rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .ffmwp-search-input {
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  height: 1.6rem;
+  width: 100%;
+  border-radius: 25px;
+  border: 1px solid rgba(255,255,255,0.2);
+  height: 40px;
+  padding: 0 15px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 14px;
+}
+
+.ffmwp-search-input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+.ffmwp-search-input:focus {
+  outline: none;
+  border-color: #3498db;
+  background: rgba(255,255,255,0.15);
 }
 
 .ffmwp-search-btn {
@@ -64,12 +82,23 @@
   background-color: #ddd;
 }
 
+.ffmwp-files-container {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+  margin: 20px 0;
+}
+
 .ffmwp-navbar-2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #eee;
-  padding: 10px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 15px 20px;
+  margin-bottom: 0;
 }
 
 .ffmwp-breadcrumb {
@@ -107,7 +136,8 @@
   flex-basis: 100%;
   gap:20px;
   justify-content: stretch;
-  margin: 15px 0;
+  margin: 0;
+  padding: 20px;
 }
 
 .ffmwp-files-list{
@@ -373,9 +403,75 @@ label.ffmwp-checkbox-inline{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #eee;
-  padding: 10px 0;
-  gap: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  gap: 15px;
+  border-radius: 8px;
+  margin: 20px 0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.ffmwp-upload-buttons.hidden {
+  display: none;
+}
+
+.ffmwp-upload-buttons > * {
+  flex: 0 0 auto;
+  min-width: 140px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.ffmwp-select-input-wrap {
+  display: inline-block;
+  background-color: #000;
+  color: #fff;
+}
+
+.ffmwp-select-input-wrap:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.ffmwp-upload-buttons .ffmwp-button {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.ffmwp-upload-buttons .ffmwp-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.ffmwp-upload-buttons .ffmwp-cancel-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.ffmwp-upload-buttons .ffmwp-cancel-btn:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.ffmwp-select-input-wrap .ffmwp-upload-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
 }
 
 .ffmwp-upload-button{
@@ -429,15 +525,49 @@ label.ffmwp-checkbox-inline{
 
 .file-preview-wrapper{
   display: flex;
-  flex-wrap:wrap;
-  justify-content: space-around;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .file-preview-wrapper-img{
-  flex-basis: 30%;
+  flex: 0 0 120px;
+  text-align: center;
+}
+.file-preview-wrapper-img img {
+  border-radius: 6px;
+  border: 2px solid #dee2e6;
+}
+
+.ffmwp-remove-file {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.ffmwp-remove-file a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: #dc3545;
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.ffmwp-remove-file a:hover {
+  background: #c82333;
 }
 .file-preview-wrapper-inputs{
-  flex-grow: 1;
+  flex: 1;
+  min-width: 300px;
 }
 
 .ffmwp-init-display{
@@ -473,26 +603,30 @@ label.ffmwp-checkbox-inline{
 /** ====== left col menu ======= */
 .ffmwp-left-menu {
   list-style: none;
-  padding: 0;
+  padding: 20px;
   margin: 0;
 }
 
 .ffmwp-left-menu li {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   position: relative;
 }
 
 .ffmwp-left-menu li a {
   display: block;
-  padding: 10px;
-  background-color: #000;
+  padding: 12px 15px;
+  background: rgba(255,255,255,0.1);
   color: #fff;
   text-decoration: none;
-  border-radius: 3px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
 }
 
 .ffmwp-left-menu li a:hover {
-  background-color: #333;
+  background: rgba(255,255,255,0.2);
+  border-left-color: #3498db;
+  transform: translateX(5px);
 }
 
 .ffmwp-submenu {

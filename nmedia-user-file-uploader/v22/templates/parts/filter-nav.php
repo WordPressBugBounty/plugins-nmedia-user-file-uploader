@@ -7,6 +7,7 @@
  
 if( ! defined('ABSPATH' ) ){ exit; } 
 ?>
+<div class="ffmwp-files-container">
 <nav class="ffmwp-navbar-2">
   <div class="ffmwp-breadcrumbs">
     <ul class="ffmwp-bc-list"></ul>

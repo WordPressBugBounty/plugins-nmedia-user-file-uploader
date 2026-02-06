@@ -181,7 +181,7 @@ function wpfm_array_get_ajax_callbacks() {
 		"nm_uploadfile_move_file" 	=> true,
 		"wpfm_save_meta" 	=> false,
 		"wpfm_file_meta_update" 	=> true,
-		"wpfm_send_file_in_email"	=> true,
+		"wpfm_send_file_in_email"	=> false,
 		// "wpfm_save_ftp_files"	=> true,
 	);
 }

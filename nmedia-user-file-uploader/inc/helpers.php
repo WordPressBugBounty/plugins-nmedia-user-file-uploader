@@ -386,8 +386,6 @@ function wpfm_get_current_user() {
     } elseif ( wpfm_is_guest_upload_allow() ) {
 
         $current_user_id = get_option('wpfm_guest_user_id');
-    } elseif( isset($_GET['user_id']) ) {
-        $current_user_id = intval($_GET['user_id']);
     }
     
     $current_user   = get_userdata( $current_user_id );
@@ -486,6 +484,7 @@ function wpfm_load_scripts( $context = 'upload' ) {
     
     wp_enqueue_script( 'wpfm-mixitup-js', WPFM_URL .'/js/jquery.mixitup.min.js', array('jquery'));
     wp_enqueue_script( 'wpfm-main-js', WPFM_URL .'/js/wpfm-main.js', array('jquery','wpfm-modal-js', 'jquery-ui-draggable', 'jquery-ui-droppable'));
+    wp_enqueue_script( 'wpfm-button-toggle', WPFM_URL .'/js/button-toggle.js', array('jquery'));
     
     wp_localize_script('wpfm-main-js', 'wpfm_main', wpfm_array_main_vars());
     

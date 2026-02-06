@@ -50,6 +50,12 @@ class WPFM_REST {
     	}
          
         $fileobj = new WPFM_File($params['fileid']);
+        
+        // Security fix: Validate file ownership before allowing rename
+        if( $fileobj->owner_id != $current_user->ID ) {
+            wp_send_json_error(__("Sorry, you don't have permission to rename this file.", "wpfm"));
+        }
+        
         $file_dir_path = wpfm_files_setup_get_directory($fileobj->owner_id);
         $file_new = $file_dir_path.$file_name;
         $resp = rename($fileobj->path, $file_new);

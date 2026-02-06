@@ -72,7 +72,8 @@ jQuery(function($){
             data: {
                 action: 'wpfm_submit_uninstall_reason',
                 reason_id: (0 === $radio.length) ? 'none' : $radio.val(),
-                reason_info: (0 !== $input.length) ? $input.val().trim() : ''
+                reason_info: (0 !== $input.length) ? $input.val().trim() : '',
+                nonce: wpfm_deactivate_ajax.nonce
             },
             beforeSend: function () {
                 button.addClass('disabled');

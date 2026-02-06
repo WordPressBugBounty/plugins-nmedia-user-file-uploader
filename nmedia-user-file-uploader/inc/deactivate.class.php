@@ -35,6 +35,16 @@ class WPFM_Deactivate {
 
         global $wpdb;
 
+        // Check user capabilities
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error('Insufficient permissions');
+        }
+
+        // Verify nonce
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'wpfm_uninstall_nonce')) {
+            wp_send_json_error('Invalid nonce');
+        }
+
         if (!isset($_POST['reason_id'])) {
             wp_send_json_error();
         }
@@ -157,6 +167,11 @@ class WPFM_Deactivate {
 		
 		// Preloader script
         wp_enqueue_script('wpfm-deactivate', WPFM_URL."/js/wpfm-deactivate.js", array('jquery'), WPFM_VERSION, true);
+        
+        // Pass nonce to JavaScript
+        wp_localize_script('wpfm-deactivate', 'wpfm_deactivate_ajax', array(
+            'nonce' => wp_create_nonce('wpfm_uninstall_nonce')
+        ));
 	}
 	
 	

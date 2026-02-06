@@ -260,9 +260,9 @@ function wpfm_can_user_choose_group_fileupload() {
 function wpfm_save_meta() {
 
 	
-	/*if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
+	if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
 		wp_send_json_error(__("Sorry, this request cannot be completed contact admin", "wpfm"));
-	}*/
+	}
 	
 	if( !current_user_can('manage_options') ) {
 		wp_send_json_error(__("Sorry, you are not allowed to save settings.", "wpfm"));

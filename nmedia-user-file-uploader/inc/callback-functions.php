@@ -14,9 +14,9 @@
 	
 function nm_uploadfile_move_file() {
 	
-	// if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
-	// 	wp_send_json_error(__("Sorry, this request cannot be completed contact admin", "wpfm"));
-	// }
+	if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
+		wp_send_json_error(__("Sorry, this request cannot be completed contact admin", "wpfm"));
+	}
 	
 	$allow_guest = wpfm_get_option('_allow_guest_upload') == 'yes' ? true : false;
 	if( !$allow_guest && ! wpfm_is_current_user_post_author($_POST['file_id'] )) {
@@ -55,9 +55,9 @@ function nm_uploadfile_move_file() {
  */
 function wpfm_edit_file_title_desc(){
 	
-	// if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
-	// 	wp_send_json_error(__("Sorry, not allowed", "wpfm"));
-	// }
+	if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
+		wp_send_json_error(__("Sorry, not allowed", "wpfm"));
+	}
 	
 	if( ! wpfm_is_current_user_post_author($_POST['file_id'] )) {
 		wp_send_json_error(__("Sorry, not allowed", "wpfm"));
@@ -97,13 +97,21 @@ function wpfm_edit_file_title_desc(){
 // sending file in email
 function wpfm_send_file_in_email() {
 	
-	// if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
-	// 	wp_send_json_error(__("Sorry, not allowed", "wpfm"));
-	// }
+	if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
+		wp_send_json_error(__("Sorry, not allowed", "wpfm"));
+	}
+	
+	if (!is_user_logged_in()) {
+		wp_send_json_error(__("Authentication required", "wpfm"));
+	}
 	
 	$file_id = isset($_REQUEST['file_id']) ? intval($_REQUEST['file_id']) : '';
 	
 	$file = new WPFM_File($file_id);
+	
+	if (!wpfm_is_current_user_post_author($file_id)) {
+		wp_send_json_error(__("Sorry, not allowed", "wpfm"));
+	}
 	
 	if( empty($_POST['emailaddress']) ) {
 		

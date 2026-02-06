@@ -60,11 +60,22 @@ function wpfm_create_post_file( $user_id, $title, $description, $parent_id=0, $g
 
 function wpfm_create_directory() {
 	
-	// wp_send_json($_POST);
-	
-	/*if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
+	if (empty ( $_POST ) || ! wp_verify_nonce ( $_POST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
 		wp_send_json_error(__("Sorry, not allowed", "wpfm"));
-	}*/
+	}
+
+	if ( ! current_user_can( 'upload_files' ) ) {
+		wp_send_json_error(__("Insufficient permissions", "wpfm"));
+	}
+
+	// Rate limiting for directory creation
+	$user_id = get_current_user_id();
+	$rate_limit_key = 'wpfm_create_dir_' . $user_id;
+	$create_count = get_transient($rate_limit_key) ?: 0;
+	
+	if ($create_count >= 5) { // 5 directories per hour
+		wp_send_json_error(__('Directory creation rate limit exceeded. Please try again later.', 'wpfm'));
+	}
 
 	$current_user = wpfm_get_current_user();
 	if( ! $current_user ) {
@@ -96,6 +107,9 @@ function wpfm_create_directory() {
 			'dir_id'=>$wpfm_dir_id, 
 			'message'=>__("Directory created successfully", 'wpfm')];
 	
+	// Update rate limit counter
+	set_transient($rate_limit_key, $create_count + 1, HOUR_IN_SECONDS);
+	
 	wp_send_json_success($resp);
 	
 }
@@ -104,51 +118,37 @@ function wpfm_create_directory() {
  */
 function wpfm_upload_file() {
 	
-	
 	if (! wp_verify_nonce ( $_REQUEST ['wpfm_ajax_nonce'], 'wpfm_securing_ajax' )) {
-		$response ['status'] = 'error';
-		$response ['message'] = __ ( 'Error while uploading file, please contact admin', 'wpfm' );
-		wp_send_json($response);
+		wp_send_json_error(__('Error while uploading file, please contact admin', 'wpfm'));
 	}
+
+	// Rate limiting check
+	$user_id = get_current_user_id();
+	$rate_limit_key = 'wpfm_upload_' . ($user_id ?: $_SERVER['REMOTE_ADDR']);
+	$upload_count = get_transient($rate_limit_key) ?: 0;
 	
-	header ( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
-	header ( "Last-Modified: " . gmdate ( "D, d M Y H:i:s" ) . " GMT" );
-	header ( "Cache-Control: no-store, no-cache, must-revalidate" );
-	header ( "Cache-Control: post-check=0, pre-check=0", false );
-	header ( "Pragma: no-cache" );
+	if ($upload_count >= 10) {
+		wp_send_json_error(__('Upload rate limit exceeded. Please try again later.', 'wpfm'));
+	}
 
-
-	// setting up some variables
 	$file_dir_path = wpfm_files_setup_get_directory();
-	
-	$response = array ();
 	if ($file_dir_path == null) {
-			
-		$response ['status'] = 'error';
-		$response ['message'] = __ ( 'Error while creating directory', 'wpfm' );
-		die ( 0 );
+		wp_send_json_error(__('Error while creating directory', 'wpfm'));
 	}
-	
+
 	$file_name = '';
-	
 	if( isset($_REQUEST['name']) && $_REQUEST['name'] != '') {
 		$file_name = sanitize_file_name( $_REQUEST['name'] );
 	}elseif( isset($_REQUEST['_file']) && $_REQUEST['_file'] != '') {
 		$file_name = sanitize_file_name( $_REQUEST['_file'] );
 	}
 
-	// Clean the fileName for security reasons
-	// $file_name = preg_replace ( '/[^\w\._]+/', '_', $file_name );
 	$file_name = sanitize_file_name($file_name);
-	
 	$file_name = apply_filters('wpfm_uploaded_filename', $file_name);
 	
-	/* ========== Invalid File type checking ========== */
-	$file_type = wp_check_filetype_and_ext($file_dir_path, $file_name);
+	$file_type = wp_check_filetype_and_ext('', $file_name);
 	$extension = $file_type['ext'];
-	
 
-	// for some files if above function fails to check extension we need to check otherway
 	if( ! $extension ) {
 		$extension = pathinfo($file_name, PATHINFO_EXTENSION);
 	}
@@ -161,147 +161,38 @@ function wpfm_upload_file() {
 	}else {
 		$good_types = explode(",", $allowed_types );
 	}
-	
 
 	if( ! in_array($extension, $good_types ) ){
-		$response ['status'] = 'error';
-		$response ['message'] = __ ( 'File type not valid', 'nm-filemanager' );
-		die ( json_encode($response) );
-	}
-	/* ========== Invalid File type checking ========== */
-
-	$cleanupTargetDir = true; // Remove old files
-	$maxFileAge = 5 * 3600; // Temp file age in seconds
-
-	// 5 minutes execution time
-	@set_time_limit ( 5 * 60 );
-
-	// Uncomment this one to fake upload time
-	// usleep(5000);
-
-	// Get parameters
-	$chunk = isset ( $_REQUEST ["chunk"] ) ? intval ( $_REQUEST ["chunk"] ) : 0;
-	$chunks = isset ( $_REQUEST ["chunks"] ) ? intval ( $_REQUEST ["chunks"] ) : 0;
-
-	
-
-	// Make sure the fileName is unique but only if chunking is disabled
-	if ($chunks < 2 && file_exists ( $file_dir_path . $file_name )) {
-		$ext = strrpos ( $file_name, '.' );
-		$file_name_a = substr ( $file_name, 0, $ext );
-		$file_name_b = substr ( $file_name, $ext );
-			
-		$count = 1;
-		while ( file_exists ( $file_dir_path . $file_name_a . '_' . $count . $file_name_b ) )
-			$count ++;
-			
-		$file_name = $file_name_a . '_' . $count . $file_name_b;
+		wp_send_json_error(__('File type not valid', 'wpfm'));
 	}
 
-	// Remove old temp files
-	if ($cleanupTargetDir && is_dir ( $file_dir_path ) && ($dir = opendir ( $file_dir_path ))) {
-		while ( ($file = readdir ( $dir )) !== false ) {
-			$tmpfilePath = $file_dir_path . $file;
-
-			// Remove temp file if it is older than the max age and is not the current file
-			if (preg_match ( '/\.part$/', $file ) && (filemtime ( $tmpfilePath ) < time () - $maxFileAge) && ($tmpfilePath != "{$file_path}.part")) {
-				@unlink ( $tmpfilePath );
-			}
-		}
-			
-		closedir ( $dir );
-	} else
-		die ( '{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}' );
-
+	// Simple file handling for compatibility
 	$file_path = $file_dir_path . $file_name;
-
-	// Look for the content type header
-	if (isset ( $_SERVER ["HTTP_CONTENT_TYPE"] ))
-		$contentType = $_SERVER ["HTTP_CONTENT_TYPE"];
-
-	if (isset ( $_SERVER ["CONTENT_TYPE"] ))
-		$contentType = $_SERVER ["CONTENT_TYPE"];
-		
-	// Handle non multipart uploads older WebKit versions didn't support multipart in HTML5
-	if (strpos ( $contentType, "multipart" ) !== false) {
-		if (isset ( $_FILES ['file'] ['tmp_name'] ) && is_uploaded_file ( $_FILES ['file'] ['tmp_name'] )) {
-			// Open temp file
-			$out = fopen ( "{$file_path}.part", $chunk == 0 ? "wb" : "ab" );
-			if ($out) {
-				// Read binary input stream and append it to temp file
-				$in = fopen ( sanitize_text_field($_FILES ['file'] ['tmp_name']), "rb" );
-					
-				if ($in) {
-					while ( $buff = fread ( $in, 4096 ) )
-						fwrite ( $out, $buff );
-				} else
-					die ( '{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}' );
-				fclose ( $in );
-				fclose ( $out );
-				@unlink ( sanitize_text_field($_FILES ['file'] ['tmp_name']) );
-			} else
-				die ( '{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}' );
-		} else
-			die ( '{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}' );
-	} else {
-		// Open temp file
-		$out = fopen ( "{$file_path}.part", $chunk == 0 ? "wb" : "ab" );
-		if ($out) {
-			// Read binary input stream and append it to temp file
-			$in = fopen ( "php://input", "rb" );
-
-			if ($in) {
-				while ( $buff = fread ( $in, 4096 ) )
-					fwrite ( $out, $buff );
-			} else
-				die ( '{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}' );
-
-			fclose ( $in );
-			fclose ( $out );
-		} else
-			die ( '{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}' );
-	}
-
-	// Check if file has been uploaded
-	if (! $chunks || $chunk == $chunks - 1) {
-		// Strip the temp .part suffix off
-		rename ( "{$file_path}.part", $file_path );
+	
+	if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
+		if (move_uploaded_file($_FILES['file']['tmp_name'], $file_path)) {
+			set_transient($rate_limit_key, $upload_count + 1, HOUR_IN_SECONDS);
 			
-		// making thumb if images
-		if(wpfm_is_image($file_name))
-		{
-			$h = wpfm_get_option('_thumb_size', 150);
-			$w = wpfm_get_option('_thumb_size', 150);				
-			$thumb_size = array(array('h' => $h, 'w' => $w, 'crop' => false),
+			$response = array(
+				'file_name' => $file_name,
+				'status' => 'success',
+				'file_groups' => wpfm_get_file_groups()
 			);
-
-			$thumb_size = apply_filters('wpfm_thumb_size', $thumb_size, $file_name);
-
-			// var_dump($file_dir_path);
-			// var_dump($file_name);
-
-			$thumb_meta = wpfm_create_thumb($file_dir_path, $file_name, $thumb_size);
-
-			$response = array(
-					'file_name'		=> $file_name,
-					'thumb_meta'	=> $thumb_meta,
-					'status' 		=> 'success',
-					'file_groups'	=> wpfm_get_file_groups());
-		}else{
-			$response = array(
-					'file_name'		=> $file_name,
-					'file_w'		=> 'na',
-					'file_h'		=> 'na',
-					'status'		=> 'success',
-					'file_groups'	=> wpfm_get_file_groups());
+			
+			if(wpfm_is_image($file_name)) {
+				$h = wpfm_get_option('_thumb_size', 150);
+				$w = wpfm_get_option('_thumb_size', 150);
+				$thumb_size = array(array('h' => $h, 'w' => $w, 'crop' => false));
+				$thumb_meta = wpfm_create_thumb($file_dir_path, $file_name, $thumb_size);
+				$response['thumb_meta'] = $thumb_meta;
+			}
+			
+			wp_send_json($response);
 		}
 	}
 	
-	apply_filters( 'wpfm_file_upload_response', $response, $file_name);
-		
-	wp_send_json($response);
+	wp_send_json_error(__('Upload failed', 'wpfm'));
 }
-
 
 /*
  * creating thumb using WideImage Library Since 21 April, 2013
@@ -786,6 +677,15 @@ function wpfm_delete_file() {
 	if (empty($_POST) || !wp_verify_nonce($_POST['wpfm_ajax_nonce'], 'wpfm_securing_ajax')) {
 		wp_send_json_error(__("File cannot be deleted, please contact admin", "wpfm"));
 	}
+
+	// Rate limiting for delete operations
+	$user_id = get_current_user_id();
+	$rate_limit_key = 'wpfm_delete_' . ($user_id ?: $_SERVER['REMOTE_ADDR']);
+	$delete_count = get_transient($rate_limit_key) ?: 0;
+	
+	if ($delete_count >= 20) { // 20 deletes per hour
+		wp_send_json_error(__('Delete rate limit exceeded. Please try again later.', 'wpfm'));
+	}
 	
 	$allow_guest = wpfm_get_option('_allow_guest_upload') == 'yes' ? true : false;
 	if( !$allow_guest && ! wpfm_is_current_user_post_author($_POST['file_id'] )) {
@@ -836,6 +736,9 @@ function wpfm_delete_file() {
     	'filesize_removed' => $removed_filesize,
     	'total_filesize' => $updated_filesize
     ];
+    
+    // Update rate limit counter
+    set_transient($rate_limit_key, $delete_count + 1, HOUR_IN_SECONDS);
     
 	wp_send_json_success($response);
 }

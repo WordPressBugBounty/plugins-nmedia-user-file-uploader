@@ -13,6 +13,7 @@ if( wpfm_get_option('_enable_table') === 'yes' ) {
 }
 ?>
 <div class="<?php echo esc_attr($wrapper_class);?>"></div>
+</div> <!-- Close ffmwp-files-container -->
 
 <script type="text/html" id="tmpl-ffmwp-files-grid">
 <# _.forEach( data, function ( file ) { #>

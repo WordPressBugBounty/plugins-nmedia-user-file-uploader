@@ -3,8 +3,8 @@ Contributors: nmedia
 Donate link: http://www.najeebmedia.com/donate/
 Tags: Front end upload, File uploader, User files, User files manager, File uploaders, Image upload, user private files
 Requires at least: 3.5
-Tested up to: 6.7.1
-Stable tag: 23.2
+Tested up to: 6.9
+Stable tag: 23.6
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,13 @@ N-Media Frontend File Manager plugin enables WordPress site users to upload, man
 
 == Description ==
 N-Media Frontend File Manager empowers WordPress users to securely upload files that are accessible only to admins. Each user’s files are stored in a private directory, ensuring only they can download or delete their own files after logging in. To unlock even more advanced control, explore the PRO features below. Use the following shortcode to integrate the plugin on your site: **[ffmwp]**
+
+**Security Enhancements (v23.6)**
+- Fixed critical email relay vulnerability
+- Enhanced nonce verification across all AJAX functions
+- Added rate limiting for uploads, deletions, and directory creation
+- Improved file type validation and MIME checking
+- Strengthened authorization checks
 
 **Live Demo Instructions**
 - [Click here](https://najeebmedia.com/filemanager-demo) to launch the demo.
@@ -101,6 +108,27 @@ Yes
 6. File Listing with Details
 
 == Changelog ==
+= 23.6 =
+* Security: Fixed critical email relay vulnerability (CVE-2024-XXXX)
+* Security: Enhanced nonce verification across all AJAX functions
+* Security: Added rate limiting for uploads (10/hour), deletions (20/hour), and directory creation (5/hour)
+* Security: Improved file type validation and MIME checking
+* Security: Strengthened authorization checks for all file operations
+* Fix: Resolved syntax errors in upload function
+* Improvement: Simplified file upload handling for better stability
+
+= 23.5 =
+* Security: Fixed Insecure Direct Object Reference vulnerability in file rename functionality (CVE-2025-13382)
+
+= 23.4 =
+* Security: Fixed directory creation vulnerability - added proper nonce verification and permission checks
+* Security: Removed user authentication bypass via GET parameter spoofing
+* Security: Enhanced access control for wpfm_create_directory() function
+
+= 23.3 =
+* Security: Fixed broken access control vulnerability in uninstall feedback functionality
+* Security: Added proper authorization and nonce verification for admin-only actions
+
 = 23.2 January 29, 2025 =
 * Bug fixed: [A bug fixed regarding save meta data](https://wordpress.org/support/topic/file-details-not-saving/)
 = 23.1 November 14, 2024 =
